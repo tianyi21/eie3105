@@ -3,7 +3,7 @@
 
 _Ⓒ Copyright Tianyi Liu 2019, All Rights Reserved._
 
-Latest Update: 15:11 May 31st, 2019 CST
+Latest Update: 15:43 May 31st, 2019 CST
 
 This repo contains the source code developed for EIE3105, delivered by [Dr. Lawrence Cheung](http://www.eie.polyu.edu.hk/~encccl/) and [Dr. K.H. Loo](https://khloo563545619.wordpress.com), Dept of EIE, HKPU.
 
@@ -21,7 +21,9 @@ EIE3105 is an integrated hardware-software project that covers from the solderin
 
 ### Structure of this repo
 `source` contains all the source files
+
 `img`    contains the images
+
 `doc`    contains the documents and deliverables
 
 ## Basic Settings
@@ -153,6 +155,6 @@ Finally, the speed (PWM) is given by:
 
 :warning: Due to large differences among robot cars, the performance may vary even with the same code.
 
-:memo: A formal version, i.e., the final report, of this README can be found [here]().
+:memo: A formal version, i.e., the final report, of this README file can be found [here](https://github.com/evanliuty/eie3105/blob/master/doc/report.pdf).
 
 :sunglasses: Most importantly, enjoy the class!
