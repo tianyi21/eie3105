@@ -25,8 +25,8 @@ EIE3105 is an integrated hardware-software project that covers from the solderin
 `doc`    contains the documents and deliverables
 
 ## Basic Settings
-![alt text](https://github.com/evanliuty/eie3105/img/robotcar.jpg "Robot Car")
-![alt text](https://github.com/evanliuty/eie3105/img/stm32.jpg "STM32")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/robotcar.jpg "Robot Car")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/stm32.jpg "STM32")
 
 The main body of the robot car will be distributed in the class. You will need your own [STM32F103RBT6](https://www.st.com/en/microcontrollers-microprocessors/stm32f103rb.html#overview) and corresponding cables.
 
@@ -41,7 +41,7 @@ The robot car is supposed to perform line tracking and track changes without hum
 
 #### Defination of Error
 
-![alt text](https://github.com/evanliuty/eie3105/img/demo2_error.jpg "Demo 2 Error")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo2_error.jpg "Demo 2 Error")
 
 I considered the robot car on the track when the left boundary of the black line lies between the 3rd and 4th photo-resistor, and the right boundary lies between the 5th and 6th photo-resistor.
 
@@ -62,17 +62,17 @@ The robot car is supposed to hit 3 balls autonomously with the location informat
 
 #### Flowchart
 
-![alt text](https://github.com/evanliuty/eie3105/img/demo3_flow.jpg "Demo 3 Flowchart")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo3_flow.jpg "Demo 3 Flowchart")
 
 #### Communication with WiFi Station
 
-![alt text](https://github.com/evanliuty/eie3105/img/wifi.jpg "WiFi Communication")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/wifi.jpg "WiFi Communication")
 
 The robot car will acquire and update the locations repeatedly from the WiFi station with a timer. Every time, it will listen until a **:** is received, which marks the starting point a data frame. Then, it stores all characters except for **\r** and **\n**. When an **M** (from *CMD*) is received, the timer is disabled and the program process the received information to update the corresponding locations. After the processing, the timer is re-enabled and wait for another overflow event.
 
 #### Defination of Error
 
-![alt text](https://github.com/evanliuty/eie3105/img/demo3_error.jpg "Demo 3 Error")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo3_error.jpg "Demo 3 Error")
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=e&space;=&space;deg(\bold&space;v_{velocity})&space;-&space;deg(\bold&space;v_{path})" target="_blank"><img src="https://latex.codecogs.com/gif.latex?e&space;=&space;deg(\bold&space;v_{velocity})&space;-&space;deg(\bold&space;v_{path})" title="e = deg(\bold v_{velocity}) - deg(\bold v_{path})" /></a>
 
@@ -91,11 +91,11 @@ PI Control
 
 ##### Linear Mapping
 
-![alt text](https://github.com/evanliuty/eie3105/img/demo3_map.jpg "Linear Mapping")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo3_map.jpg "Linear Mapping")
 
 We can see from the above image that when the distance becomes smaller, the same disturbance will create a larger error (in terms of degree). Therefore, using the same weighting parameters may not be a wise choice. Instead, the proportional weighting factor is **linearly decreased with the decrement of distance**, while Integral remains constant.
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball))&space;-&space;500)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball))&space;-&space;500)" title="k_P = \frac{dist(car, ball)}{1250} \times u(500 - dist(car,ball)) + 0.4 \times u(dist(car,ball)) - 500)" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," title="k_P = \frac{dist(car, ball)}{1250} \times u(500 - dist(car,ball)) + 0.4 \times u(dist(car,ball) - 500)," /></a>
 
 ### Demo 4: Hit Ball in Turns
 
@@ -105,13 +105,13 @@ Two robot cars hit the balls in turns, from green region to the opposite green r
 
 #### Flowchart
 
-![alt text](https://github.com/evanliuty/eie3105/img/demo4_flow.jpg "Demo 4 Flowchart")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo4_flow.jpg "Demo 4 Flowchart")
 
 #### Communication with WiFi Station
 
 Same as Demo 3
 
-#### Defination of Error
+#### Definition of Error
 
 Same as Demo 3
 
@@ -126,12 +126,12 @@ PI Control
 
 Similiar to Demo 3, in Demo 4, both proportional and integral weighting factors are linearly mapped.
 
-<a href="https://www.codecogs.com/eqnedit.php?latex=k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball))&space;-&space;500)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball))&space;-&space;500)" title="k_P = \frac{dist(car, ball)}{1250} \times u(500 - dist(car,ball)) + 0.4 \times u(dist(car,ball)) - 500)" /></a>
+<a href="https://www.codecogs.com/eqnedit.php?latex=k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," title="k_P = \frac{dist(car, ball)}{1250} \times u(500 - dist(car,ball)) + 0.4 \times u(dist(car,ball) - 500)," /></a>
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=k_I&space;=&space;\frac{dist(car,&space;ball)}{4000}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.1&space;\times&space;u(dist(car,ball)-&space;500)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_I&space;=&space;\frac{dist(car,&space;ball)}{4000}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.1&space;\times&space;u(dist(car,ball)-&space;500)" title="k_I = \frac{dist(car, ball)}{4000} \times u(500 - dist(car,ball)) + 0.1 \times u(dist(car,ball)- 500)" /></a>
 
 #### Compensation of Error
-![alt text](https://github.com/evanliuty/eie3105/img/demo4_comp.jpg "Demo 4 Compensation")
+![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo4_comp.jpg "Demo 4 Compensation")
 
 One major difference between Demo 3 and Demo 4 is the location of the balls are not fixed. Consequently, using the same strategy to hit the ball cannot guarantee the ball can enter the opposite green region. A compensation scheme is designed to reduce this effect. 
 
