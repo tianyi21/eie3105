@@ -15,7 +15,7 @@ EIE3105 is an integrated hardware-software project that covers from the solderin
 ### How to Use?
 :heavy_check_mark:Simply clone this repo through 
 
-`git clone https://github.com/evanliuty/eie3105/`
+`git clone https://github.com/evanliuty/eie3105`
 
 :heavy_check_mark:Open your IDE, build and upload to you MCU.
 
@@ -35,6 +35,22 @@ The main body of the robot car will be distributed in the class. You will need y
 For IDE selection, I used the [Keil µVision](http://www2.keil.com/mdk5/uvision/) with Windows 10 x64. You can also consider [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) which can be run with macOS.
 
 ## Description
+### ARM_USART
+
+This is a quite useful program for you to debug your program. You can let the robot car send certain character or value through USART and connect the corresponding USART to your STM32 and display the values using TeraTerm. 
+
+:warning: Since the USART2 of STM32F103RBT6 will be overrided by the USB cable, you have to use an intermediate USART (USART1 or USART3) to transfer the information to/from USART2 of STM32.
+
+#### Example
+
+*Robot Car Send Information*
+
+Robot Car USART1 *---Ext. Cable--->* STM32 USART1 *---Int. Program--->* STM32 USART2 *---USB Cable--->* TeraTerm
+
+*Robot Car Receive Information*
+
+TeraTerm *---USB Cable--->* STM32 USART2 *---Int. Program--->* STM32 USART3 *---Ext. Cable--->* Robot Car USART1
+
 ### Demo 2: Line Tracking
 
 The robot car is supposed to perform line tracking and track changes without human intervention.
