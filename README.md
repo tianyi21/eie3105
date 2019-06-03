@@ -45,11 +45,11 @@ This is a quite useful program for you to debug your program. You can let the ro
 
 *Robot Car Send Information*
 
-Robot Car USART1 *---Ext. Cable--->* STM32 USART1 *---Int. Program--->* STM32 USART2 *---USB Cable--->* TeraTerm
+Robot Car USART1 *---Ext. Cable--->* STM32 USART1/3 *---Int. Program--->* STM32 USART2 *---USB Cable--->* TeraTerm
 
 *Robot Car Receive Information*
 
-TeraTerm *---USB Cable--->* STM32 USART2 *---Int. Program--->* STM32 USART3 *---Ext. Cable--->* Robot Car USART1
+TeraTerm *---USB Cable--->* STM32 USART2 *---Int. Program--->* STM32 USART1/3 *---Ext. Cable--->* Robot Car USART1
 
 ### Demo 2: Line Tracking
 
@@ -63,7 +63,7 @@ The robot car is supposed to perform line tracking and track changes without hum
 
 I considered the robot car on the track when the left boundary of the black line lies between the 3rd and 4th photo-resistor, and the right boundary lies between the 5th and 6th photo-resistor.
 
-Therefore, it provides two options: Follow the left boundary or follow the right boundary. It also helps the robot car to perform track changing.
+Therefore, this provides us with two options: Follow the left boundary or follow the right boundary. It also helps the robot car to perform track changing.
 
 #### Control Scheme
 P Control
@@ -86,7 +86,7 @@ The robot car is supposed to hit 3 balls autonomously with the location informat
 
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/wifi.jpg "WiFi Communication")
 
-The robot car will acquire and update the locations repeatedly from the WiFi station with a timer. Every time, it will listen until a **:** is received, which marks the starting point a data frame. Then, it stores all characters except for **\r** and **\n**. When an **M** (from *CMD*) is received, the timer is disabled and the program process the received information to update the corresponding locations. After the processing, the timer is re-enabled and wait for another overflow event.
+The robot car will acquire and update the locations repeatedly from the WiFi station with a timer. After every timer overflow event, it will listen until a **:** is received, which marks the starting point a data frame. Then, it stores all characters except for **\r** and **\n**. When an **M** (from *CMD*) is received, the timer is disabled and the program process the received information to update the corresponding locations. After the processing, the timer is re-enabled and wait for the next overflow event.
 
 #### Defination of Error
 
@@ -98,7 +98,7 @@ The robot car will acquire and update the locations repeatedly from the WiFi sta
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=\bold&space;v_{path}&space;=&space;{loc}_{ball}&space;-&space;{loc}_{car}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\bold&space;v_{path}&space;=&space;{loc}_{ball}&space;-&space;{loc}_{car}" title="\bold v_{path} = {loc}_{ball} - {loc}_{car}" /></a>
 
-Instead of using the absolute difference in x and y axes as error, I defined two vectors, a path vector, and a velocity vector. Moreover, I used a **one-cap design** that requires only one marker to locate the car and its heading. The path vector is calculated as the difference between the location of the ball and the location of the car (cap). The velocity vector is calculated using two consecutive measurements of the robot car location.
+Instead of using the absolute differences in x and y axes as PID error, I defined two vectors, a path vector, and a velocity vector. Moreover, I used a **one-cap design** that requires **only one marker** to locate the car and calculate its heading. The path vector is calculated as the difference between the location of the ball and the location of the car (cap). The velocity vector is calculated using two consecutive measurements of the robot car location.
 
 #### Control Scheme
 PI Control
@@ -111,13 +111,13 @@ PI Control
 
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo3_map.jpg "Linear Mapping")
 
-We can see from the above image that when the distance becomes smaller, the same disturbance will create a larger error (in terms of degree). Therefore, using the same weighting parameters may not be a wise choice. Instead, the proportional weighting factor is **linearly decreased with the decrement of distance**, while Integral remains constant.
+We can see from the above image that when the distance becomes smaller, the same disturbance will create a **larger** error (in terms of degree). Therefore, using the same weighting parameters may not be a wise choice. Instead, the proportional weighting factor is **linearly decreased with the decrement of distance**, while integral remains constant.
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," title="k_P = \frac{dist(car, ball)}{1250} \times u(500 - dist(car,ball)) + 0.4 \times u(dist(car,ball) - 500)," /></a>
 
 ### Demo 4: Hit Ball in Turns
 
-Two robot cars hit the balls in turns, from green region to the opposite green region, again, autonomously.
+Two robot cars hit the balls in turns, from one green region to the opposite green region, again, autonomously.
 
 [Video Link](https://youtu.be/pxqHDLINmTU)
 
@@ -148,10 +148,10 @@ Similiar to Demo 3, in Demo 4, both proportional and integral weighting factors 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=k_I&space;=&space;\frac{dist(car,&space;ball)}{4000}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.1&space;\times&space;u(dist(car,ball)-&space;500)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_I&space;=&space;\frac{dist(car,&space;ball)}{4000}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.1&space;\times&space;u(dist(car,ball)-&space;500)" title="k_I = \frac{dist(car, ball)}{4000} \times u(500 - dist(car,ball)) + 0.1 \times u(dist(car,ball)- 500)" /></a>
 
-#### Compensation of Error
+#### Compensation of Error/Hitting-Target
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo4_comp.jpg "Demo 4 Compensation")
 
-One major difference between Demo 3 and Demo 4 is the location of the balls are not fixed. Consequently, using the same strategy to hit the ball cannot guarantee the ball can enter the opposite green region. A compensation scheme is designed to reduce this effect. 
+One major difference between Demo 3 and Demo 4 is the locations of the balls are not fixed. Consequently, using the same strategy to hit the ball cannot guarantee the ball entering the opposite green region. A compensation scheme is designed to reduce this effect, or it can be called a hitting-target design (in contrast to hitting-ball).
 
 First, an offset is defined by the distance the ball enter the green region (~the distance the ball needs to travel to the opposite green region).
 
@@ -162,6 +162,12 @@ Then, the car will actually hit the target defined by two previous steps, instea
 Finally, the speed (PWM) is given by: 
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=v&space;=&space;v_{nomimal}&space;&plus;&space;\frac{1}{20}\times&space;L_{diff}&space;&plus;&space;\frac{1}{10}\times&space;{offset}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?v&space;=&space;v_{nomimal}&space;&plus;&space;\frac{1}{20}\times&space;L_{diff}&space;&plus;&space;\frac{1}{10}\times&space;{offset}" title="v = v_{nomimal} + \frac{1}{20}\times L_{diff} + \frac{1}{10}\times {offset}" /></a>
+
+### Lab_Archived
+
+This [folder](https://github.com/evanliuty/eie3105/tree/master/source/Lab_Archived) contains all lab files.
+
+The lab sheet can be found here: [Sem1](https://github.com/evanliuty/eie3105/blob/master/doc/Lab_Sem1.pdf)         [Sem2](https://github.com/evanliuty/eie3105/blob/master/doc/Lab_Sem2.pdf)
 
 ## Final Remarks
 
