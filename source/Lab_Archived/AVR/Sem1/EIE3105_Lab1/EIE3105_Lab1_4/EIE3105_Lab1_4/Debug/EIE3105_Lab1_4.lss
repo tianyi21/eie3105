@@ -1,0 +1,171 @@
+
+EIE3105_Lab1_4.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000128  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000000d4  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000128  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000158  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000198  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000006cc  00000000  00000000  000001b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000621  00000000  00000000  00000884  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000238  00000000  00000000  00000ea5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  000010e0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000373  00000000  00000000  00001104  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000a8  00000000  00000000  00001477  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000010  00000000  00000000  0000151f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 40 00 	call	0x80	; 0x80 <main>
+  78:	0c 94 68 00 	jmp	0xd0	; 0xd0 <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <main>:
+
+#include <avr/io.h>
+
+int main(void)
+{
+	DDRD = 0xFF;							// PD: OUT
+  80:	8f ef       	ldi	r24, 0xFF	; 255
+  82:	8a b9       	out	0x0a, r24	; 10
+	DDRB &= ~(1<<0);						// PB0: IN
+  84:	20 98       	cbi	0x04, 0	; 4
+	PORTB != (1<<0);						// PB0: Pull-Up
+  86:	85 b1       	in	r24, 0x05	; 5
+	int stage = 0, value_0 = 0, value;		// Stage: Represent State; value_0: Past Value; value: Present Value
+  88:	40 e0       	ldi	r20, 0x00	; 0
+  8a:	50 e0       	ldi	r21, 0x00	; 0
+  8c:	60 e0       	ldi	r22, 0x00	; 0
+  8e:	70 e0       	ldi	r23, 0x00	; 0
+		if (value == value_0)				// If Present == Past
+		continue;						// No Change, Break Present Loop, until Change
+		if (stage)							// Toggle //Present 0: On -> Off Present 1: Off -> On
+		PORTD = 0x00;					// Low: Off
+		else
+		PORTD = 0xFF;					// High: On
+  90:	ff ef       	ldi	r31, 0xFF	; 255
+		value_0 = value;					// Update Past Value
+		if (!value)							// Check if the button is released
+		{									// If release,
+			if (stage)						// Update Stage
+  92:	e1 e0       	ldi	r30, 0x01	; 1
+  94:	a0 e0       	ldi	r26, 0x00	; 0
+  96:	01 c0       	rjmp	.+2      	; 0x9a <main+0x1a>
+	PORTB != (1<<0);						// PB0: Pull-Up
+	int stage = 0, value_0 = 0, value;		// Stage: Represent State; value_0: Past Value; value: Present Value
+	while (1)								// INF Loop
+	{
+		for (double i=0;i<576;i++);			// Introduce a short delay, improve stability of the button.
+		value = (PINB & (1<<0));			// Read Input Present Value
+  98:	a9 01       	movw	r20, r18
+int main(void)
+{
+	DDRD = 0xFF;							// PD: OUT
+	DDRB &= ~(1<<0);						// PB0: IN
+	PORTB != (1<<0);						// PB0: Pull-Up
+	int stage = 0, value_0 = 0, value;		// Stage: Represent State; value_0: Past Value; value: Present Value
+  9a:	80 e4       	ldi	r24, 0x40	; 64
+  9c:	92 e0       	ldi	r25, 0x02	; 2
+  9e:	01 97       	sbiw	r24, 0x01	; 1
+	while (1)								// INF Loop
+	{
+		for (double i=0;i<576;i++);			// Introduce a short delay, improve stability of the button.
+  a0:	f1 f7       	brne	.-4      	; 0x9e <main+0x1e>
+		value = (PINB & (1<<0));			// Read Input Present Value
+  a2:	83 b1       	in	r24, 0x03	; 3
+  a4:	28 2f       	mov	r18, r24
+  a6:	21 70       	andi	r18, 0x01	; 1
+  a8:	30 e0       	ldi	r19, 0x00	; 0
+		if (value == value_0)				// If Present == Past
+  aa:	24 17       	cp	r18, r20
+  ac:	35 07       	cpc	r19, r21
+  ae:	a9 f3       	breq	.-22     	; 0x9a <main+0x1a>
+		continue;						// No Change, Break Present Loop, until Change
+		if (stage)							// Toggle //Present 0: On -> Off Present 1: Off -> On
+  b0:	61 15       	cp	r22, r1
+  b2:	71 05       	cpc	r23, r1
+  b4:	11 f0       	breq	.+4      	; 0xba <main+0x3a>
+		PORTD = 0x00;					// Low: Off
+  b6:	1b b8       	out	0x0b, r1	; 11
+  b8:	01 c0       	rjmp	.+2      	; 0xbc <main+0x3c>
+		else
+		PORTD = 0xFF;					// High: On
+  ba:	fb b9       	out	0x0b, r31	; 11
+		value_0 = value;					// Update Past Value
+		if (!value)							// Check if the button is released
+  bc:	21 15       	cp	r18, r1
+  be:	31 05       	cpc	r19, r1
+  c0:	59 f7       	brne	.-42     	; 0x98 <main+0x18>
+		{									// If release,
+			if (stage)						// Update Stage
+  c2:	8e 2f       	mov	r24, r30
+  c4:	67 2b       	or	r22, r23
+  c6:	09 f0       	breq	.+2      	; 0xca <main+0x4a>
+  c8:	8a 2f       	mov	r24, r26
+int main(void)
+{
+	DDRD = 0xFF;							// PD: OUT
+	DDRB &= ~(1<<0);						// PB0: IN
+	PORTB != (1<<0);						// PB0: Pull-Up
+	int stage = 0, value_0 = 0, value;		// Stage: Represent State; value_0: Past Value; value: Present Value
+  ca:	68 2f       	mov	r22, r24
+  cc:	70 e0       	ldi	r23, 0x00	; 0
+  ce:	e4 cf       	rjmp	.-56     	; 0x98 <main+0x18>
+
+000000d0 <_exit>:
+  d0:	f8 94       	cli
+
+000000d2 <__stop_program>:
+  d2:	ff cf       	rjmp	.-2      	; 0xd2 <__stop_program>
