@@ -3,7 +3,7 @@
 
 _Ⓒ Copyright Tianyi Liu 2019, All Rights Reserved._
 
-Latest Update: 15:43 May 31st, 2019 CST
+Latest Update: 22:45 July 29th, 2019 CST
 
 This repo contains the source code developed for EIE3105, delivered by [Dr. Lawrence Cheung](http://www.eie.polyu.edu.hk/~encccl/) and [Dr. K.H. Loo](https://khloo563545619.wordpress.com), Dept of EIE, HKPU.
 
@@ -170,6 +170,8 @@ This [folder](https://github.com/evanliuty/eie3105/tree/master/source/Lab_Archiv
 The lab sheet can be found here: [Sem1](https://github.com/evanliuty/eie3105/blob/master/doc/Lab_Sem1.pdf)         [Sem2](https://github.com/evanliuty/eie3105/blob/master/doc/Lab_Sem2.pdf)
 
 ## Final Remarks
+
+:thumbsup: Thanks Mr. Bowen YANG for the very helpful discussions and suggestions during my implementation of this project.
 
 :100: Try to implement your own control scheme first. This is a good and interesting class.
 
