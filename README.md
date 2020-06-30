@@ -1,9 +1,9 @@
 # EIE3105: Integrated Project
 *Autonomous Robot Car with STM32*:car: 
 
-_Ⓒ Copyright Tianyi Liu 2019, All Rights Reserved._
+_Ⓒ Copyright Tianyi Liu 2019-2020, All Rights Reserved._
 
-Latest Update: 22:45 July 29th, 2019 CST
+Latest Update: 12:29 AM July 1st, 2020 CST
 
 This repo contains the source code developed for EIE3105, delivered by [Dr. Lawrence Cheung](http://www.eie.polyu.edu.hk/~encccl/) and [Dr. K.H. Loo](https://khloo563545619.wordpress.com), Dept of EIE, HKPU.
 
@@ -25,6 +25,8 @@ EIE3105 is an integrated hardware-software project that covers from the solderin
 `img`    contains the images
 
 `doc`    contains the documents and deliverables
+
+`test_quiz` contains previous quiz and test **USE AT YOUR OWN RISK!**
 
 ## Basic Settings
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/robotcar.jpg "Robot Car")
