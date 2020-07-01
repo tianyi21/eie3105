@@ -10,7 +10,7 @@ This repo contains the source code developed for EIE3105, delivered by [Dr. Lawr
 :boom:**If you use or partially use this repo, you shall formally - in report or presentation - acknowledge this repo.**
 
 ## Introduction
-EIE3105 is an integrated hardware-software project that covers from the soldering to MCU programming. It uses [PID controllor](https://en.wikipedia.org/wiki/PID_controller) as the baseline, requiring students to implement control algorithms to let the robot car accomplish different tasks autonomously. 
+EIE3105 is an integrated hardware-software project that covers from the soldering to MCU programming. It uses [PID controllor](https://en.wikipedia.org/wiki/PID_controller) as the baseline, requiring students to implement control algorithms to accomplish different tasks with ta robot car autonomously. 
 
 ### How to Use?
 :heavy_check_mark:Simply clone this repo through 
@@ -37,11 +37,11 @@ The main body of the robot car will be distributed in the class. You will need y
 For IDE selection, I used the [Keil µVision](http://www2.keil.com/mdk5/uvision/) with Windows 10 x64. You can also consider [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) which can be run with macOS.
 
 ## Description
-### ARM_USART
+⭐️### ARM_USART
 
-This is a quite useful program for you to debug your program. You can let the robot car send certain character or value through USART and connect the corresponding USART to your STM32 and display the values using TeraTerm. 
+This is a quite useful program for you to debug your program. You can send certain character or value through USART and connect the corresponding USART to your STM32 to display the values using TeraTerm. 
 
-:warning: Since the USART2 of STM32F103RBT6 will be overrided by the USB cable, you have to use an intermediate USART (USART1 or USART3) to transfer the information to/from USART2 of STM32.
+:warning: Since the USART2 of STM32F103RBT6 will be overrided by the USB cable, you have to use an intermediate USART (USART1 or USART3) to relay the information to/from USART2 of STM32.
 
 #### Example
 
@@ -55,7 +55,7 @@ TeraTerm *---USB Cable--->* STM32 USART2 *---Int. Program--->* STM32 USART1/3 *-
 
 ### Demo 2: Line Tracking
 
-The robot car is supposed to perform line tracking and track changes without human intervention.
+Perform line tracking and track changes without human intervention.
 
 [Video Link](https://youtu.be/aTSeCGgGjnU)
 
@@ -76,7 +76,7 @@ P Control
 
 ### Demo 3: Hit 3 Balls
 
-The robot car is supposed to hit 3 balls autonomously with the location information provided by WiFi station.
+Hitting 3 balls autonomously with the location information provided by WiFi station.
 
 [Video Link](https://youtu.be/oVnxMDGdJqI) 
 
@@ -88,7 +88,7 @@ The robot car is supposed to hit 3 balls autonomously with the location informat
 
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/wifi.jpg "WiFi Communication")
 
-The robot car will acquire and update the locations repeatedly from the WiFi station with a timer. After every timer overflow event, it will listen until a **:** is received, which marks the starting point a data frame. Then, it stores all characters except for **\r** and **\n**. When an **M** (from *CMD*) is received, the timer is disabled and the program process the received information to update the corresponding locations. After the processing, the timer is re-enabled and wait for the next overflow event.
+The robot car will acquire and update the locations repeatedly from the WiFi station with a timer. After every timer overflow event, it will listen until a **:** is received, which marks the starting point a data frame. Then, it stores all characters except for **\r** and **\n**. When an **M** (from *CMD*) is received, the timer is disabled and the program process the received information to update the corresponding locations. After the processing, the timer is re-enabled and wait for the next overflow event. *However, such setting is not rigorous and also not the **correct** way to use the data frame.* At the WiFi station, there are a few options that can be encoded in the data frame to control the robot car. Due to time limitation, we did not implement such function. A cherry-picked decoding scheme decribed above should work for demos.
 
 #### Defination of Error
 
@@ -113,13 +113,13 @@ PI Control
 
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo3_map.jpg "Linear Mapping")
 
-We can see from the above image that when the distance becomes smaller, the same disturbance will create a **larger** error (in terms of degree). Therefore, using the same weighting parameters may not be a wise choice. Instead, the proportional weighting factor is **linearly decreased with the decrement of distance**, while integral remains constant.
+We can see from the above image that when the distance becomes smaller, a same disturbance will create a **larger** error (in terms of degree). Therefore, using the same weighting parameters may not be a wise choice. Instead, the proportional weighting factor is **linearly decreased with the decrement of distance**, while integral remains constant.
 
 <a href="https://www.codecogs.com/eqnedit.php?latex=k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," target="_blank"><img src="https://latex.codecogs.com/gif.latex?k_P&space;=&space;\frac{dist(car,&space;ball)}{1250}&space;\times&space;u(500&space;-&space;dist(car,ball))&space;&plus;&space;0.4&space;\times&space;u(dist(car,ball)&space;-&space;500)," title="k_P = \frac{dist(car, ball)}{1250} \times u(500 - dist(car,ball)) + 0.4 \times u(dist(car,ball) - 500)," /></a>
 
 ### Demo 4: Hit Ball in Turns
 
-Two robot cars hit the balls in turns, from one green region to the opposite green region, again, autonomously.
+Two robot cars hit the ball in turns, from one green region to the opposite green region, again, autonomously.
 
 [Video Link](https://youtu.be/pxqHDLINmTU)
 
@@ -153,13 +153,9 @@ Similiar to Demo 3, in Demo 4, both proportional and integral weighting factors 
 #### Compensation of Error/Hitting-Target
 ![alt text](https://github.com/evanliuty/eie3105/blob/master/img/demo4_comp.jpg "Demo 4 Compensation")
 
-One major difference between Demo 3 and Demo 4 is the locations of the balls are not fixed. Consequently, using the same strategy to hit the ball cannot guarantee the ball entering the opposite green region. A compensation scheme is designed to reduce this effect, or it can be called a hitting-target design (in contrast to hitting-ball).
+A major difference between Demo 3 and Demo 4 is the locations of the balls are not fixed. Consequently, using the same strategy to hit the ball cannot guarantee the ball entering the opposite green region. A compensation scheme is designed to reduce this effect, or it can be called a hitting-target design, in contrast to hitting-ball.
 
-First, an offset is defined by the distance the ball enter the green region (~the distance the ball needs to travel to the opposite green region).
-
-Second, an extra distance is defined by the y-axis difference (~final hitting angle).
-
-Then, the car will actually hit the target defined by two previous steps, instead of hitting the ball itself.
+First, an offset is defined by the distance the ball entering the green region (~the distance the ball needs to travel to the opposite green region). An extra distance is defined by the y-axis difference (~final hitting angle). Then, the car will actually hit the target defined by two previous steps, instead of hitting the ball itself.
 
 Finally, the speed (PWM) is given by: 
 
